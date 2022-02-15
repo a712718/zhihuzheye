@@ -1,30 +1,28 @@
 <template>
   <div class="container">
     <global-header :user="user"></global-header>
-    <form>
-      <validate-input type="input" v-model="inputValue" placeholder="请输入。。。。" class="x-input" :rules="inputRules"></validate-input>
-      {{inputValue}}
+    <validate-form @formSubmit.prevent="onFormSubmit">
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Email address</label>
+        <validate-input type="input" v-model="formdata.email" placeholder="请输入email" class="x-input" :rules="emailRules"></validate-input>
+      </div>
       <div class="mb-3">
         <label for="exampleInputPassword1" class="form-label">Password</label>
-        <input type="password" class="form-control" id="exampleInputPassword1">
+        <validate-input type="password" v-model="formdata.password" placeholder="请输入password" class="x-input" :rules="passwordRules"></validate-input>
       </div>
-      <div class="mb-3 form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-        <label class="form-check-label" for="exampleCheck1">Check me out</label>
-      </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+    </validate-form>
     <column-list :list="list"></column-list>
   </div>
   
 </template>
 
 <script lang="ts">    
-import { ref, defineComponent } from 'vue';
+import { ref, defineComponent, reactive } from 'vue';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ColumnList, { IColumnProps } from './components/ColumnList.vue';
 import GlobalHeader, { IUserProps } from './components/GlobalHeader.vue';
 import ValidateInput from './components/ValidateInput.vue';
+import ValidateForm from './components/ValidateForm.vue'
 
 let testData: IColumnProps[] = [
   {
@@ -62,23 +60,31 @@ export default defineComponent({
   components: {
     ColumnList,
     GlobalHeader,
-    ValidateInput
+    ValidateInput,
+    ValidateForm
   },
   setup(){
     const list = ref(testData);
-    const inputValue = ref('');
-    const inputRules = [{
+    const formdata = reactive({
+      email: '',
+      password: ''
+    });
+    const emailRules = [{
       type: 'required',
       message: '不能为空'
     },{
       type: 'email',
       message: '请输入符合规范的邮箱'
     }]
+    const onFormSubmit = (result: boolean) => {
+      console.log('app onFormSubmit result', result);
+    }
     return {
       list,
       user: userData,
-      inputValue,
-      inputRules
+      formdata,
+      emailRules,
+      onFormSubmit
     }
   }
 });

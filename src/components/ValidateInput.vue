@@ -1,31 +1,46 @@
 <template>
-   <div class="mb-3">
-      <label for="exampleInputEmail1" class="form-label">Email address</label>
+   <div class="validate-input-container pb-3">
       <!-- <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" :value="modelValue" @change="change"> -->
       <!-- <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" v-model="inputRef.value" @change="change"> -->
-      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" v-model="inputRef.value" @blur="validateInput">
-      <div id="emailHelp" class="form-text" v-if="inputRef.err">{{ inputRef.message }}</div>
+      <input 
+        v-if="tag!==textarea"
+        class="form-control" 
+        v-model="inputRef.value" 
+        @blur="validateInput"
+        v-bind="$attrs"
+        >
+      <textarea
+        v-else
+        class="form-control" 
+        v-model="inputRef.value" 
+        @blur="validateInput"
+        v-bind="$attrs"
+      >
+      </textarea>
+      <div class="invalid-feedback" v-if="inputRef.err">{{ inputRef.message }}</div>
     </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType, reactive } from 'vue'
+import { computed, defineComponent, PropType, reactive, onMounted } from 'vue'
+import { mitter } from './ValidateForm.vue';
+
 const emailReg = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-interface RuleProp {
+interface IRuleProp {
   type: 'required' | 'email' | 'custom';
   message: string;
   validator?: () => boolean;
 }
-export type RulesProp = RuleProp[]
+export type ITagType = 'input' | 'textarea'
+export type IRulesProp = IRuleProp[]
 export default defineComponent({
   name: 'ValidateInput',
   props: {
-    modelValue: {
-      type: String,
+    modelValue: String,
+    rules: Array as PropType<IRulesProp>,
+    tag: {
+      type: String as  PropType<ITagType>,
       default: 'input'
-    },
-    rules: {
-      type: Array as PropType<RulesProp>
     }
   },
   inheritAttrs: false, // 组件的属性给当前组件 不往父组件传递
@@ -50,8 +65,14 @@ export default defineComponent({
       message: ''
     })
 
-    const validateInput = ()=>{
+    onMounted(() => {
+      console.log('validate input mitter');
+      mitter.emit('form-item-create', validateInput)
+    })
+
+    const validateInput = () => {
       if (props.rules) {
+        // every 返回结果是true 继续往下执行，执行结果为false返回
         const allPassed = props.rules.every(rule => {
           let passed = true;
           inputRef.message = rule.message;
@@ -74,9 +95,7 @@ export default defineComponent({
         inputRef.err = !allPassed;
         return allPassed;
       }
-
       return true
-
     }
     return {
       // change,
