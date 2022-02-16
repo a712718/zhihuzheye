@@ -14,7 +14,9 @@ import { defineComponent, onUnmounted } from 'vue'
 import mitt from 'mitt';
 type IValidateFunc = ()=> boolean;
 type Events = { 'form-item-create': IValidateFunc}
-export const mitter = mitt<Events>();
+
+export const mitter = mitt<Events>()
+
 export default defineComponent({
   name: 'ValidateForm',
   setup(props, context) {
