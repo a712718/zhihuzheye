@@ -1,5 +1,4 @@
 <template>
-  <div>login</div>
   <validate-form @form-submit="onFormSubmit">
     <div class="mb-3">
       <label for="exampleInputEmail1" class="form-label">Email address</label>
@@ -13,7 +12,8 @@
 </template>
 <script lang="ts">
 import { defineComponent, reactive } from 'vue'
-import http from '../utils/http'
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
 import ValidateInput from '../components/ValidateInput.vue';
 import ValidateForm from '../components/ValidateForm.vue';
 
@@ -24,6 +24,8 @@ export default defineComponent({
     ValidateForm
   },
   setup() {
+    const store = useStore();
+    const router = useRouter();
      console.log('login');
      const formdata = reactive({
       email: '',
@@ -37,21 +39,12 @@ export default defineComponent({
       message: '请输入符合规范的邮箱'
     }]
     const onFormSubmit = (result: boolean) => {
-      http.post('/user/login', {
-        "email": "111@test.com",
-        "password": "111111"
-      }).then(res => {
-        // TODO 如果code是其他的统一处理
-        if (res.data.code === 0) {
-          console.log('登录成功', res);
-          // 存储token
-          const token = res.data.data.token;
-          console.log('token,,,,', token);
-        }
-        
-      }).catch(error => {
-        console.log('登录失败', error);
-      })
+      store.dispatch('loginAndFetchCurrentUser',formdata)
+       .then(() => {
+         router.push({
+           name: 'home'
+         })
+       });
       console.log('app onFormSubmit result', result);
     }
 

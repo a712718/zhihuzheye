@@ -14,7 +14,7 @@ import GlobalHeader, { IUserProps } from './components/GlobalHeader.vue';
 const userData: IUserProps = {
   isLogin: false,
   name: '马红',
-  id: 1,
+  id: '1',
 }
 
 export default defineComponent({

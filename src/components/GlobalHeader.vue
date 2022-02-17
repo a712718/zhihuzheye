@@ -3,6 +3,7 @@
     <a class="navbar-brand" href="#">知乎者也专栏</a>
     <ul v-if="!user.isLogin" class="list-inline mb-0">
       <li class="list-inline-item"><a href="#" class="btn btn-outline-light my-2">登陆</a></li>
+      <li class="list-inline-item" @click="logout"><a href="#" class="btn btn-outline-light my-2">退出</a></li>
       <li class="list-inline-item"><a href="#" class="btn btn-outline-light my-2">注册</a></li>
     </ul>
     <ul v-else class="list-inline mb-0">
@@ -19,13 +20,14 @@
 </template>
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
+import {useStore} from 'vuex';
 import Dropdown from './Dropdown.vue'
 import DropdownItem from './DropdownItem.vue';
 
 export interface IUserProps {
   isLogin: boolean;
   name?: string;
-  id?: number;
+  id?: string;
 }
 export default defineComponent({
   name: 'ColumnList',
@@ -37,6 +39,15 @@ export default defineComponent({
     user: {
       type: Object as PropType<IUserProps>,
       required: true
+    }
+  },
+  setup() {
+    const store = useStore();
+    const logout = () => {
+      store.commit('logout');
+    }
+    return {
+      logout
     }
   }
 })

@@ -16,10 +16,10 @@
 <script lang="ts">
 import { defineComponent, computed, PropType } from 'vue'
 export interface IColumnProps {
-  id: number
-  title: string
-  avatar?: string
-  description: string
+  id: string;
+  title: string;
+  avatar?: string;
+  description: string;
 }
 export default defineComponent({
   name: 'ColumnList',
