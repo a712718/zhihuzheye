@@ -65,7 +65,7 @@ const store = createStore({
     },
     fetchCurrentUser(context) {
       console.log('actions,,,,,,,fetchCurrentUser,,,,,,');
-      // 这么写就可以把异步执行完 在处理接下来的事件
+      // 这么写就可以把异步执行完 在处理接下来的事件， 把then里的结果返回出去是promise（fullfilld）
       return http.get('/user/current')
       .then(res => {
         if (res.data.code === 0) {
