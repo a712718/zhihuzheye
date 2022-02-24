@@ -2,6 +2,7 @@
   <div class="container">
     <global-header :user="user"></global-header>
     <router-view></router-view>
+    {{VUE_APP_DESC}}
   </div>
   
 </template>
@@ -23,8 +24,11 @@ export default defineComponent({
     GlobalHeader,
   },
   setup(){
+    
+    console.log('process.env.VUE_APP_DESC', process.env.VUE_APP_DESC);
     return {
       user: userData,
+      VUE_APP_DESC: process.env.VUE_APP_DESC
     }
   }
 });
