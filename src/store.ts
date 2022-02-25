@@ -48,8 +48,13 @@ const store = createStore({
     }
   },
   actions: {
-    login(context, payload) {
+    async login(context, payload) {
       console.log('actions,,,,,,,login,,,,,,');
+      // 如果有错误这里data等待不到，下面的代码不执行
+      const { data } = await http.post('/user/login', payload);
+      console.log('await data', data);
+      context.commit('login', data)
+      return data;
       return http.post('/user/login', payload)
       .then(res => {
         // TODO 如果code是其他的统一处理
@@ -61,11 +66,15 @@ const store = createStore({
         }
       }).catch(error => {
         console.log('登录失败', error);
+        console.log('登录失败error', error.error);
       })
     },
-    fetchCurrentUser(context) {
+   async fetchCurrentUser(context) {
       console.log('actions,,,,,,,fetchCurrentUser,,,,,,');
       // 这么写就可以把异步执行完 在处理接下来的事件， 把then里的结果返回出去是promise（fullfilld）
+      const { data } = await http.get('/user/current');
+      context.commit('fetchCurrentUser', data)
+      return data;
       return http.get('/user/current')
       .then(res => {
         if (res.data.code === 0) {
@@ -78,10 +87,19 @@ const store = createStore({
       })
     },
     async loginAndFetchCurrentUser(context, payload) {
-      context.dispatch('login', payload).then(()=>{
+      // 一定要用await才会等 await后面的代码执行完在返回promise
+      await context.dispatch('login', payload).then(()=>{
+        console.log('????????');
         context.dispatch('fetchCurrentUser');
       });
     }
+    // loginAndFetchCurrentUser(context, payload) {
+    //   // 一定要用await才会等 await后面的代码执行完在返回promise
+    //   return context.dispatch('login', payload).then(()=>{
+    //     console.log('????????');
+    //     context.dispatch('fetchCurrentUser');
+    //   });
+    // }
   }
 })
 
