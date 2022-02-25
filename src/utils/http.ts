@@ -1,5 +1,6 @@
 import axios from 'axios';
-import router from '@/router';
+// import router from '@/router';
+import creatMessage  from '@/components/createMessage'
 
 const instance = axios.create({
   baseURL: 'http://apis.imooc.com/api/'
@@ -41,6 +42,8 @@ instance.interceptors.response.use(response => {
   //     name: 'NotFound'
   //   })
   // 
+  const data = error.response.data;
+  creatMessage(data.error, 'error');
   return Promise.reject(error.response.data);
 })
 
