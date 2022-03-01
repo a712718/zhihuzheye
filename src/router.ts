@@ -39,8 +39,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  console.log('router to,,,', to);
-  console.log('router from,,,', from)
+  console.log('router.beforeEach,,,,');
   const {token, user} = store.state;
   const {redirectToHome, requireLogin} = to.meta
   if(!user.isLogin){
@@ -48,11 +47,15 @@ router.beforeEach((to, from, next) => {
       http.defaults.headers.common.Authorization = `Bearer ${token}`;
       store.dispatch('fetchCurrentUser')
       .then(() => {
-        next('/')
+        if (redirectToHome) {
+          next('/')
+        } else {
+          next();
+        }
       }).catch(()=>{
+        store.commit('logout');
         next('login')
       })
-      
     } else {
       if(requireLogin){
         next('login');

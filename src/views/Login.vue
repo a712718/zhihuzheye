@@ -16,6 +16,7 @@ import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import ValidateInput from '../components/ValidateInput.vue';
 import ValidateForm from '../components/ValidateForm.vue';
+import creatMessage  from '@/components/createMessage';
 
 export default defineComponent({
   name: 'Login',
@@ -40,13 +41,14 @@ export default defineComponent({
     }]
     const onFormSubmit = (result: boolean) => {
       store.dispatch('loginAndFetchCurrentUser',formdata)
-       .then(() => {
-         console.log('loginAndFetchCurrentUser success,,,,,,,,,');
+       .then((res) => {
+         console.log('res,,,,,', res);
          router.push({
            name: 'home'
          })
        }).catch(error => {
-          console.log('loginAndFetchCurrentUser error,,,,,,,,,');
+          creatMessage(error.error, 'error');
+          console.log('loginAndFetchCurrentUser error,,,,,,,,,',error);
        })
       console.log('app onFormSubmit result', result);
     }

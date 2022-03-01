@@ -2,7 +2,7 @@
   <nav class="navbar navbar-dark bg-primary justify-content-between mb-4 px-4">
     <a class="navbar-brand" href="#">知乎者也专栏</a>
     <ul v-if="!user.isLogin" class="list-inline mb-0">
-      <li class="list-inline-item"><a href="#" class="btn btn-outline-light my-2">登陆</a></li>
+      <li class="list-inline-item" @click="login"><a href="#" class="btn btn-outline-light my-2">登陆</a></li>
       <li class="list-inline-item" @click="logout"><a href="#" class="btn btn-outline-light my-2">退出</a></li>
       <li class="list-inline-item"><a href="#" class="btn btn-outline-light my-2">注册</a></li>
     </ul>
@@ -21,6 +21,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 import {useStore} from 'vuex';
+import { useRouter } from 'vue-router';
 import Dropdown from './Dropdown.vue'
 import DropdownItem from './DropdownItem.vue';
 
@@ -43,11 +44,21 @@ export default defineComponent({
   },
   setup() {
     const store = useStore();
+    const router = useRouter(); 
     const logout = () => {
       store.commit('logout');
+      router.push({
+        name: 'login'
+      });
+    }
+    const login = () => {
+      router.push({
+        name: 'login'
+      })
     }
     return {
-      logout
+      logout,
+      login
     }
   }
 })

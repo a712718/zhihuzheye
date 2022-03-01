@@ -8,15 +8,10 @@
 </template>
 
 <script lang="ts">    
-import { defineComponent } from 'vue';
+import { computed, defineComponent } from 'vue';
+import { useStore } from 'vuex';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import GlobalHeader, { IUserProps } from './components/GlobalHeader.vue';
-
-const userData: IUserProps = {
-  isLogin: false,
-  name: '马红',
-  id: '1',
-}
 
 export default defineComponent({
   name: 'App',
@@ -24,10 +19,11 @@ export default defineComponent({
     GlobalHeader,
   },
   setup(){
-    
+    const store = useStore();
+    const user = computed(() => store.state.user)
     console.log('process.env.VUE_APP_DESC', process.env.VUE_APP_DESC);
     return {
-      user: userData,
+      user,
       VUE_APP_DESC: process.env.VUE_APP_DESC
     }
   }

@@ -1,6 +1,6 @@
 import axios from 'axios';
 // import router from '@/router';
-import creatMessage  from '@/components/createMessage'
+
 
 const instance = axios.create({
   baseURL: 'http://apis.imooc.com/api/'
@@ -35,15 +35,13 @@ instance.interceptors.response.use(response => {
   console.log('对响应错误处理error.response', error.response)
   console.log('对响应错误处理error.response.data', error.response.data)
   console.log('对响应错误处理error.response.status', error.response.status)
-  console.log('对响应错误处理error.response.headers', error.response.headers)
   // const status = error.response.status;
   // if (status === 404) {
   //   router.push({
   //     name: 'NotFound'
   //   })
   // 
-  const data = error.response.data;
-  creatMessage(data.error, 'error');
+  // 这里如果不return，默认也会返回Promise.reject(error)此时在业务组件中用http获取数据catch里的error很复杂
   return Promise.reject(error.response.data);
 })
 
