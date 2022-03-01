@@ -10,6 +10,7 @@ export interface IUserProps {
 export interface IGlobalDataProps {
   user: IUserProps;
   token: string;
+  loading: boolean;
 }
 
 const store = createStore({
@@ -20,7 +21,8 @@ const store = createStore({
         name: '',
         id: ''
       },
-      token: localStorage.getItem('token') || ''
+      token: localStorage.getItem('token') || '',
+      loading: false
     }
   },
   getters: {},
@@ -43,6 +45,10 @@ const store = createStore({
       state.token = '';
       localStorage.removeItem('token');
       http.defaults.headers.common.Authorization = '';
+      state.user.isLogin = false;
+    },
+    setLoading(state, payload) {
+      state.loading = payload;
     }
   },
   actions: {
