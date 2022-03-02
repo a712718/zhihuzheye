@@ -9,7 +9,7 @@
       <!-- <li class="list-inline-item"><a href="#" class="btn btn-outline-light my-2">您好：{{user.name}}</a></li> -->
       <li class="list-inline-item">
         <dropdown :title="`你好 ${user.name}`">
-          <dropdown-item><a href="#" class="dropdown-item">新建文章</a></dropdown-item>
+          <dropdown-item @click="create"><a href="#" class="dropdown-item">新建文章</a></dropdown-item>
           <dropdown-item disabled><a href="#" class="dropdown-item">编辑资料</a></dropdown-item>
           <dropdown-item @click="logout"><a href="#" class="dropdown-item">退出登陆</a></dropdown-item>
         </dropdown>
@@ -52,9 +52,15 @@ export default defineComponent({
         name: 'login'
       })
     }
+    const create = () => {
+      router.push({
+        name: 'create'
+      })
+    }
     return {
       logout,
-      login
+      login,
+      create
     }
   }
 })

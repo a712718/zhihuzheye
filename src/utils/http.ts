@@ -17,9 +17,13 @@ instance.interceptors.request.use( config => {
       icode: mukeCode
     }
   } else {
-    config.data = {
-      ...config.data,
-      icode: mukeCode
+    if (config.data instanceof FormData) {
+      config.data.append('icode', mukeCode);
+    } else {
+      config.data = {
+        ...config.data,
+        icode: mukeCode
+      }
     }
   }
   store.commit('setLoading', true);
