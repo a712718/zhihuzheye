@@ -3,6 +3,7 @@ import store from './store';
 import http from '@/utils/http'
 import Home from './views/Home.vue';
 import Login from './views/Login.vue';
+import Register from './views/Register.vue';
 import NotFound from './views/404.vue'
 import Create from './views/Create.vue'
 
@@ -18,6 +19,12 @@ const routes = [
     path: '/login',
     name: 'login',
     component: Login,
+    meta: {redirectToHome: true}
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: Register,
     meta: {redirectToHome: true}
   },
   {

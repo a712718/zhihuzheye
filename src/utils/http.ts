@@ -10,7 +10,7 @@ const instance = axios.create({
 // 发消息中统一添加icode
 instance.interceptors.request.use( config => {
   console.log('request config', config);
-  const mukeCode = '5CD4944B827AC23C';
+  const mukeCode = '04AB3ABE5C99AA0C';
   if (config.method === 'get') {
     config.params = {
       ...config.params,
