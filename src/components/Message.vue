@@ -34,7 +34,6 @@ export default defineComponent({
 
     const close = () =>{
       isVisible.value = false;
-      console.log('close');
     }
     return {
       isVisible,

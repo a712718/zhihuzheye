@@ -16,7 +16,7 @@ export default defineComponent({
     }
 
     const handleFileChange = (e: Event) => {
-      console.log('handleFileChange,,,,', e);
+      // console.log('handleFileChange,,,,', e);
       const fileInput = e.target as HTMLInputElement;
       if(!fileInput.files){
         return;
@@ -28,7 +28,7 @@ export default defineComponent({
       const formData = new FormData();
      
       formData.append('file', fileList[0]);
-      console.log('form data,,,', formData);
+      // console.log('form data,,,', formData);
       http.post('/upload', formData, {
         headers: {'Content-Type':  'multipart/form-data'}
       }).then(res=> {

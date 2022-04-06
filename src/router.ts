@@ -46,7 +46,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  console.log('router.beforeEach,,,,');
+  // console.log('router.beforeEach,,,,');
   const {token, user} = store.state;
   const {redirectToHome, requireLogin} = to.meta
   if(!user.isLogin){

@@ -29,7 +29,7 @@ const store = createStore({
   mutations: {
     login(state: IGlobalDataProps, payload: any) {
       const token = payload.token;
-      console.log('token,,,,', token);
+      // console.log('token,,,,', token);
       state.token = token;
       localStorage.setItem('token', token)
       http.defaults.headers.common.Authorization = `Bearer ${token}`;
@@ -55,7 +55,7 @@ const store = createStore({
     async login(context, payload) {
       // 如果有错误这里data等待不到，返回promise.reject。下面的代码不执行,下面的代码相当于then里的代码
       const { data }  = await http.post('/user/login', payload);
-      console.log('await data', data);
+      // console.log('await data', data);
       context.commit('login', data)
       return data;
       // 这样写也是返回一个promise因为then、catch里不报错就返回promise.resolve
@@ -74,10 +74,10 @@ const store = createStore({
       // })
     },
    async fetchCurrentUser(context) {
-      console.log('actions,,,,,,,fetchCurrentUser,,,,,,');
+      // console.log('actions,,,,,,,fetchCurrentUser,,,,,,');
       // 这么写就可以把异步执行完 在处理接下来的事件， 把then里的结果返回出去是promise（fullfilld）
       const  { data } = await http.get('/user/current');
-      console.log('fetchCurrentUser,,,,,data', data);
+      // console.log('fetchCurrentUser,,,,,data', data);
       context.commit('fetchCurrentUser', data)
       return data;
       // return http.get('/user/current')

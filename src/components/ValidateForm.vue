@@ -20,13 +20,12 @@ export const mitter = mitt<Events>()
 export default defineComponent({
   name: 'ValidateForm',
   setup(props, context) {
-    console.log('2')
     let funcArray:IValidateFunc[] = [];
     const callback = (func?: IValidateFunc) => {
       if(func) {
         funcArray.push(func);
       }
-      console.log('funcArray,,,', funcArray);
+      // console.log('funcArray,,,', funcArray);
     }
     mitter.on('form-item-create', callback)
     onUnmounted(() => {

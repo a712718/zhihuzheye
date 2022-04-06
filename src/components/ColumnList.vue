@@ -31,10 +31,10 @@ export default defineComponent({
   },
   setup(props) {
     // setup只在组件创建的时候执行一次
-    console.log('columnlist setup!!!!');
+    // console.log('columnlist setup!!!!');
     const columnList = computed(() => {
       // 但里面调用的钩子函数和在外面用的钩子函数一样会在适当的时候执行，如computed每次props.list改变就执行
-      console.log('columnlist computed!!!!');
+      // console.log('columnlist computed!!!!');
       return props.list.map(column => {
         if(!column.avatar) {
           column.avatar = require('@/assets/logo.png')

@@ -38,7 +38,6 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const router = useRouter();
-     console.log('login');
      const formdata = reactive({
       email: '',
       nickName: '',
@@ -57,7 +56,6 @@ export default defineComponent({
         nickName: formdata.nickName,
         password: formdata.password
       }).then((res: any) => {
-        console.log('注册res！！！！！！', res);
         if (res.code === 0) {
           creatMessage('注册成功', 'success');
           router.push({

@@ -9,7 +9,6 @@ const instance = axios.create({
 
 // 发消息中统一添加icode
 instance.interceptors.request.use( config => {
-  console.log('request config', config);
   const mukeCode = '04AB3ABE5C99AA0C';
   if (config.method === 'get') {
     config.params = {
@@ -43,7 +42,7 @@ instance.interceptors.response.use(response => {
   return Promise.reject(response.data);
 }, error => {
   // 对响应错误处理
-  console.log('对响应错误处理error.response', error.response)
+  // console.log('对响应错误处理error.response', error.response)
   store.commit('setLoading', false);
   // const status = error.response.status;
   // if (status === 404) {

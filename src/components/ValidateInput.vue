@@ -66,7 +66,7 @@ export default defineComponent({
     })
 
     onMounted(() => {
-      console.log('validate input mitter');
+      // console.log('validate input mitter');
       mitter.emit('form-item-create', validateInput)
     })
 

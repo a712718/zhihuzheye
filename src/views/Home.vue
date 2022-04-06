@@ -1,8 +1,14 @@
 <template>
+  <div style="display: flex;justify-content: center; align-items: center; flex-direction: column">
+    <img src="@/assets/callout.png"/>
+    <h3>随心写作，自由表达</h3>
+    <button style="padding:5px 10px; background: #0d6efd; color: #fff;border: 1px solid #0d6efd; border-radius: 4px; margin: 10px" @click="create">开始写文章</button>
+  </div>
   <column-list :list="list"></column-list>
 </template>
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import ColumnList, { IColumnProps } from '../components/ColumnList.vue';
 let testData: IColumnProps[] = [
   {
@@ -36,10 +42,16 @@ export default defineComponent({
     ColumnList
   },
   setup() {
+    const router = useRouter();
     const list = ref(testData);
-    console.log('Home');
+    const create = () => {
+      router.push({
+        name: 'create'
+      })
+    }
     return {
       list,
+      create
     }
   },
 })

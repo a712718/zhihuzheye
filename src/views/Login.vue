@@ -27,7 +27,6 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const router = useRouter();
-     console.log('login');
      const formdata = reactive({
       email: '',
       password: ''
@@ -42,15 +41,12 @@ export default defineComponent({
     const onFormSubmit = (result: boolean) => {
       store.dispatch('loginAndFetchCurrentUser',formdata)
        .then((res) => {
-         console.log('res,,,,,', res);
          router.push({
            name: 'home'
          })
        }).catch(error => {
           creatMessage(error.error, 'error');
-          console.log('loginAndFetchCurrentUser error,,,,,,,,,',error);
        })
-      console.log('app onFormSubmit result', result);
     }
 
     return {

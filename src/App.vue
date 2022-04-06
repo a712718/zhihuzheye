@@ -25,7 +25,7 @@ export default defineComponent({
     const store = useStore();
     const user = computed(() => store.state.user)
     const loading = computed(() => store.state.loading)
-    console.log('process.env.VUE_APP_DESC', process.env.VUE_APP_DESC);
+    // console.log('process.env.VUE_APP_DESC', process.env.VUE_APP_DESC);
     return {
       user,
       loading,
